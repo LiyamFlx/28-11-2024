@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EngageSense - Comprehensive Engagement Analytics</title>
+  <title>EngageSense - Comprehensive Analytics</title>
   <style>
     :root {
       --purple: #6E55BB;
@@ -16,11 +16,9 @@
       --grey: #9E9E9E;
     }
 
-    /* General Styles */
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Arial', sans-serif;
       margin: 0;
-      padding: 0;
       background-color: var(--black);
       color: var(--white);
     }
@@ -77,7 +75,6 @@
       background-color: #17a743;
     }
 
-    /* Chart Styles */
     .chart-container {
       margin: 20px 0;
     }
@@ -87,7 +84,6 @@
       height: auto;
     }
 
-    /* Waveform Styles */
     #waveform {
       background: var(--dark-grey);
       height: 100px;
@@ -95,7 +91,6 @@
       border-radius: 10px;
     }
 
-    /* Recommendation Styles */
     .recommendation-card {
       padding: 15px;
       background-color: var(--black);
@@ -115,16 +110,55 @@
       font-size: 1rem;
       line-height: 1.5;
     }
+
+    .info-box {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      background: var(--dark-grey);
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .info-box h3 {
+      margin: 0;
+      color: var(--blue);
+    }
+
+    .info-box p {
+      margin: 0;
+    }
+
+    @media (max-width: 768px) {
+      .info-box {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
   </style>
 </head>
 <body>
   <header>
     <h1>EngageSense</h1>
-    <p>Real-Time Engagement Analytics Platform</p>
+    <p>Comprehensive Real-Time Engagement Analytics</p>
   </header>
 
   <div class="container">
-    <!-- Recommendations Section -->
+    <!-- Engagement Overview -->
+    <div class="section">
+      <h2>Engagement Overview</h2>
+      <div class="info-box">
+        <h3>Overall Engagement: 85%</h3>
+        <p>Data sourced from live analysis</p>
+      </div>
+      <div class="info-box">
+        <h3>Sentiment Analysis</h3>
+        <p>Emotional Intensity: High, Sentiment: Positive</p>
+      </div>
+    </div>
+
+    <!-- Dynamic Recommendations -->
     <div class="section">
       <h2>Dynamic Recommendations</h2>
       <div class="recommendation-card">
@@ -136,7 +170,7 @@
       </div>
     </div>
 
-    <!-- Chart Section -->
+    <!-- Engagement Trends Chart -->
     <div class="section">
       <h2>Engagement Trends</h2>
       <div class="chart-container">
@@ -144,7 +178,7 @@
       </div>
     </div>
 
-    <!-- Waveform Section -->
+    <!-- Waveform Visualization -->
     <div class="section">
       <h2>Waveform Visualization</h2>
       <div id="waveform"></div>
@@ -152,8 +186,11 @@
     </div>
   </div>
 
+  <!-- Include Chart.js and WaveSurfer.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://unpkg.com/wavesurfer.js"></script>
   <script>
-    // Generate Recommendations
+    // Recommendations Logic
     function generateRecommendations(physical, mental, spiritual) {
       const recommendations = [];
       if (physical < 50) recommendations.push("Boost physical engagement with interactive activities.");
@@ -162,11 +199,10 @@
       return recommendations;
     }
 
-    // Update Recommendations
     function updateRecommendations(physical, mental, spiritual) {
       const recommendations = generateRecommendations(physical, mental, spiritual);
       const recommendationList = document.getElementById("recommendationList");
-      recommendationList.innerHTML = ""; // Clear old recommendations
+      recommendationList.innerHTML = "";
       recommendations.forEach((rec) => {
         const listItem = document.createElement("li");
         listItem.textContent = rec;
@@ -174,9 +210,9 @@
       });
     }
 
-    updateRecommendations(40, 60, 30); // Example values
+    updateRecommendations(40, 60, 30);
 
-    // Chart.js Setup
+    // Engagement Chart
     const ctx = document.getElementById("engagementChart").getContext("2d");
     const engagementChart = new Chart(ctx, {
       type: "line",
@@ -213,7 +249,7 @@
       },
     });
 
-    // Wavesurfer.js Setup
+    // Waveform Visualization
     const wavesurfer = WaveSurfer.create({
       container: "#waveform",
       waveColor: "violet",
@@ -222,7 +258,7 @@
       cursorColor: "#FFFFFF",
     });
 
-    // Load Sample Audio (Replace with actual file in production)
+    // Load Example Audio (Replace with actual file)
     wavesurfer.load("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3");
 
     // Play/Pause Button
@@ -230,10 +266,5 @@
       wavesurfer.playPause();
     });
   </script>
-
-  <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <!-- Wavesurfer.js -->
-  <script src="https://unpkg.com/wavesurfer.js"></script>
 </body>
 </html>
