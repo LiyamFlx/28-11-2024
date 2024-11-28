@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EngageSense - Comprehensive Engagement Analytics</title>
+  <style>
+    :root {
+      --purple: #6E55BB;
+      --blue: #26A6FF;
+      --green: #1DB954;
+      --red: #FF5733;
+      --black: #121212;
+      --dark-grey: #1E1E1E;
+      --white: #FFFFFF;
+      --grey: #9E9E9E;
+    }
+
+    /* General Styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--black);
+      color: var(--white);
+    }
+
+    header {
+      background: linear-gradient(to right, var(--purple), var(--blue));
+      text-align: center;
+      padding: 20px;
+      color: var(--white);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
+
+    header p {
+      margin: 5px 0 0;
+      font-size: 1.2rem;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .section {
+      margin-bottom: 30px;
+      padding: 20px;
+      background-color: var(--dark-grey);
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .section h2 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      color: var(--blue);
+    }
+
+    button {
+      background-color: var(--green);
+      color: var(--black);
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #17a743;
+    }
+
+    /* Chart Styles */
+    .chart-container {
+      margin: 20px 0;
+    }
+
+    canvas {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* Waveform Styles */
+    #waveform {
+      background: var(--dark-grey);
+      height: 100px;
+      margin: 20px 0;
+      border-radius: 10px;
+    }
+
+    /* Recommendation Styles */
+    .recommendation-card {
+      padding: 15px;
+      background-color: var(--black);
+      border: 1px solid var(--grey);
+      border-radius: 10px;
+      text-align: left;
+    }
+
+    .recommendation-card ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .recommendation-card ul li {
+      margin-bottom: 10px;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>EngageSense</h1>
+    <p>Real-Time Engagement Analytics Platform</p>
+  </header>
+
+  <div class="container">
+    <!-- Recommendations Section -->
+    <div class="section">
+      <h2>Dynamic Recommendations</h2>
+      <div class="recommendation-card">
+        <ul id="recommendationList">
+          <li>Boost physical engagement with interactive activities.</li>
+          <li>Enhance mental engagement with thought-provoking content.</li>
+          <li>Inspire your audience with meaningful messages.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Chart Section -->
+    <div class="section">
+      <h2>Engagement Trends</h2>
+      <div class="chart-container">
+        <canvas id="engagementChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Waveform Section -->
+    <div class="section">
+      <h2>Waveform Visualization</h2>
+      <div id="waveform"></div>
+      <button id="playPauseButton">Play/Pause</button>
+    </div>
+  </div>
+
+  <script>
+    // Generate Recommendations
+    function generateRecommendations(physical, mental, spiritual) {
+      const recommendations = [];
+      if (physical < 50) recommendations.push("Boost physical engagement with interactive activities.");
+      if (mental < 50) recommendations.push("Enhance mental engagement with thought-provoking content.");
+      if (spiritual < 50) recommendations.push("Inspire your audience with meaningful messages.");
+      return recommendations;
+    }
+
+    // Update Recommendations
+    function updateRecommendations(physical, mental, spiritual) {
+      const recommendations = generateRecommendations(physical, mental, spiritual);
+      const recommendationList = document.getElementById("recommendationList");
+      recommendationList.innerHTML = ""; // Clear old recommendations
+      recommendations.forEach((rec) => {
+        const listItem = document.createElement("li");
+        listItem.textContent = rec;
+        recommendationList.appendChild(listItem);
+      });
+    }
+
+    updateRecommendations(40, 60, 30); // Example values
+
+    // Chart.js Setup
+    const ctx = document.getElementById("engagementChart").getContext("2d");
+    const engagementChart = new Chart(ctx, {
+      type: "line",
+      data: {
+        labels: ["0s", "10s", "20s", "30s", "40s", "50s"],
+        datasets: [
+          {
+            label: "Physical Engagement",
+            data: [50, 60, 55, 70, 65, 75],
+            borderColor: "#6E55BB",
+            backgroundColor: "rgba(110, 85, 187, 0.2)",
+            fill: true,
+          },
+          {
+            label: "Mental Engagement",
+            data: [40, 50, 45, 55, 50, 60],
+            borderColor: "#26A6FF",
+            backgroundColor: "rgba(38, 166, 255, 0.2)",
+            fill: true,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: "top",
+          },
+          title: {
+            display: true,
+            text: "Engagement Trends Over Time",
+          },
+        },
+      },
+    });
+
+    // Wavesurfer.js Setup
+    const wavesurfer = WaveSurfer.create({
+      container: "#waveform",
+      waveColor: "violet",
+      progressColor: "purple",
+      barWidth: 2,
+      cursorColor: "#FFFFFF",
+    });
+
+    // Load Sample Audio (Replace with actual file in production)
+    wavesurfer.load("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3");
+
+    // Play/Pause Button
+    document.getElementById("playPauseButton").addEventListener("click", () => {
+      wavesurfer.playPause();
+    });
+  </script>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Wavesurfer.js -->
+  <script src="https://unpkg.com/wavesurfer.js"></script>
+</body>
+</html>
