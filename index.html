@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EngageSense - Comprehensive Analytics</title>
+  <title>EngageSense - Real-Time Analytics</title>
   <style>
+    /* Root Variables */
     :root {
       --purple: #6E55BB;
       --blue: #26A6FF;
@@ -16,15 +17,17 @@
       --grey: #9E9E9E;
     }
 
+    /* General Styles */
     body {
       font-family: 'Arial', sans-serif;
       margin: 0;
       background-color: var(--black);
       color: var(--white);
+      scroll-behavior: smooth;
     }
 
     header {
-      background: linear-gradient(to right, var(--purple), var(--blue));
+      background: linear-gradient(90deg, var(--purple), var(--blue));
       text-align: center;
       padding: 20px;
       color: var(--white);
@@ -68,11 +71,12 @@
       border-radius: 5px;
       cursor: pointer;
       font-size: 1rem;
-      transition: background-color 0.3s ease;
+      transition: all 0.3s ease;
     }
 
     button:hover {
       background-color: #17a743;
+      transform: translateY(-3px);
     }
 
     .chart-container {
@@ -91,12 +95,32 @@
       border-radius: 10px;
     }
 
+    .tooltip {
+      position: relative;
+    }
+
+    .tooltip:hover::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: -35px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--grey);
+      color: var(--black);
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 0.9rem;
+      white-space: nowrap;
+    }
+
+    /* Recommendation Card */
     .recommendation-card {
       padding: 15px;
       background-color: var(--black);
       border: 1px solid var(--grey);
       border-radius: 10px;
       text-align: left;
+      animation: fadeIn 1s ease-in-out;
     }
 
     .recommendation-card ul {
@@ -111,29 +135,24 @@
       line-height: 1.5;
     }
 
-    .info-box {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px;
-      background: var(--dark-grey);
-      border-radius: 10px;
-      margin-bottom: 20px;
-    }
-
-    .info-box h3 {
-      margin: 0;
-      color: var(--blue);
-    }
-
-    .info-box p {
-      margin: 0;
+    /* Keyframe Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     @media (max-width: 768px) {
-      .info-box {
-        flex-direction: column;
-        align-items: flex-start;
+      header h1 {
+        font-size: 2rem;
+      }
+      .section h2 {
+        font-size: 1.5rem;
       }
     }
   </style>
@@ -141,21 +160,17 @@
 <body>
   <header>
     <h1>EngageSense</h1>
-    <p>Comprehensive Real-Time Engagement Analytics</p>
+    <p>Real-Time Engagement Tracking and Insights</p>
   </header>
 
   <div class="container">
     <!-- Engagement Overview -->
     <div class="section">
       <h2>Engagement Overview</h2>
-      <div class="info-box">
-        <h3>Overall Engagement: 85%</h3>
-        <p>Data sourced from live analysis</p>
+      <div class="tooltip" data-tooltip="Overall engagement calculated in real-time.">
+        <h3>Overall Engagement: <span style="color: var(--green);">85%</span></h3>
       </div>
-      <div class="info-box">
-        <h3>Sentiment Analysis</h3>
-        <p>Emotional Intensity: High, Sentiment: Positive</p>
-      </div>
+      <p>Data sourced from live analysis.</p>
     </div>
 
     <!-- Dynamic Recommendations -->
@@ -170,7 +185,7 @@
       </div>
     </div>
 
-    <!-- Engagement Trends Chart -->
+    <!-- Engagement Trends -->
     <div class="section">
       <h2>Engagement Trends</h2>
       <div class="chart-container">
@@ -186,7 +201,6 @@
     </div>
   </div>
 
-  <!-- Include Chart.js and WaveSurfer.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://unpkg.com/wavesurfer.js"></script>
   <script>
